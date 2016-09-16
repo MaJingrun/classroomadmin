@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">ClassRoomManage</string>
+    <string name="app_name">教室管理</string>
+    <string name="check">查询</string>
+    <string name="apply">申请</string>
+    <string name="myinfo">我的</string>
+    <string name="number">学号:</string>
+    <string name="password">密码:</string>
+    <string name="login">登陆</string>
+    <string name="login_of_student">学生登陆</string>
+    <string name="login_of_admin">管理员登陆</string>
 </resources>
