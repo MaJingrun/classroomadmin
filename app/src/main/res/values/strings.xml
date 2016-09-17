@@ -8,4 +8,6 @@
     <string name="login">登陆</string>
     <string name="login_of_student">学生登陆</string>
     <string name="login_of_admin">管理员登陆</string>
+    <string name="no_course">无课时间表</string>
+
 </resources>

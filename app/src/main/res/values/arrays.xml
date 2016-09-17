@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="buildings">
+        <item>1区</item>
+        <item>2区</item>
+        <item>3区</item>
+        <item>4区</item>
+        <item>5区</item>
+    </string-array>
+
+    <string-array name="number">
+        <item>1楼</item>
+        <item>2楼</item>
+        <item>3楼</item>
+        <item>4楼</item>
+    </string-array>
+
+    <string-array name="number2">
+        <item>1楼</item>
+        <item>2楼</item>
+        <item>3楼</item>
+        <item>4楼</item>
+    </string-array>
+</resources>

@@ -24,7 +24,7 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></TabWidget>
+                android:layout_height="wrap_content"/>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -40,11 +40,29 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/text111"
-                        android:text="aaa"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/spinner_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <Spinner
+                            android:id="@+id/spinner_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <Button
+                            android:id="@+id/button_no_course"
+                            android:text="@string/no_course"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
 
@@ -55,12 +73,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/button2"
-                        android:text="button2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
                 </LinearLayout>
 
 
@@ -71,12 +83,6 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/button3"
-                        android:text="button3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

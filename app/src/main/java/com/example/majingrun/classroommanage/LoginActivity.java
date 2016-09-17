@@ -14,8 +14,19 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
-public class LoginActivity extends AppCompatActivity implements Runnable{
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+public class LoginActivity extends AppCompatActivity{
+
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public static OkHttpClient okHttpClient=new OkHttpClient();
     EditText editText_id;
     EditText editText_p;
     Button button;
@@ -23,7 +34,6 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
     User user;
     int type=0;
     Gson gson=new Gson();
-    httpClient okHttp=new httpClient();
     String s="null";
 
     @Override
@@ -45,25 +55,8 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
                         Toast.makeText(LoginActivity.this,"必须选择登陆类型",Toast.LENGTH_SHORT).show();
                     }else {
                         user=new User(editText_id.getText().toString(),editText_p.getText().toString(),type);
-                        new Thread(LoginActivity.this).start();
-                        while(s.equals("null"));
-                        if(s.equals("1")){
-                            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                            Intent in=new Intent(LoginActivity.this,AdminActivity.class);
-                            startActivity(in);
-                            finish();
-                        }else if(s.equals("2")){
-                            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                            Intent in=new Intent(LoginActivity.this,AdminActivity.class);
-                            startActivity(in);
-                            finish();
-                        }else if(s.equals("0")){
-                            Toast.makeText(LoginActivity.this,"账号密码不正确",Toast.LENGTH_SHORT).show();
-                            s="null";
-                        }else{
-                            Toast.makeText(LoginActivity.this,"网络连接错误",Toast.LENGTH_SHORT).show();
-                            s="null";
-                        }
+                        TestLogin(user);
+
                     }
                 }
             }
@@ -81,23 +74,54 @@ public class LoginActivity extends AppCompatActivity implements Runnable{
             }
         });
     }
-    public String Login(User user){
+    public void TestLogin(User user){
         String json=gson.toJson(user);
-
         String url="http://192.168.1.104/web/Login.php";
         String re="";
-        try {
-            re = okHttp.PostJson(url,json);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        Log.i("info","111111111111111111111111111"+json);
-        Log.i("info","333333333333333333333333333"+re);
-        return re;
+        RequestBody requestBody= RequestBody.create(JSON,json);
+        Request request=new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    s=response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ShowLoginInfo();
+                        }
+                    });
+                }
+
+            }
+        });
     }
 
-    @Override
-    public void run() {
-         s=Login(user);
+    public void ShowLoginInfo(){
+        if(s.equals("1")){
+            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
+            Intent in=new Intent(LoginActivity.this,StudentActivity.class);
+            startActivity(in);
+            finish();
+        }else if(s.equals("2")){
+            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
+            Intent in=new Intent(LoginActivity.this,AdminActivity.class);
+            startActivity(in);
+            finish();
+        }else if(s.equals("0")){
+            Toast.makeText(LoginActivity.this,"账号密码不正确",Toast.LENGTH_SHORT).show();
+            s="null";
+        }else{
+            Toast.makeText(LoginActivity.this,"网络连接错误",Toast.LENGTH_SHORT).show();
+            s="null";
+        }
     }
 }
