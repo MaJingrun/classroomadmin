@@ -68,13 +68,26 @@
     </RadioGroup>
 
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:id="@+id/button_of_login"
-        android:layout_below="@+id/radioGroup"
-        android:layout_alignParentStart="true" />
+        android:orientation="horizontal"
+        android:layout_below="@+id/radioGroup">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:id="@+id/button_of_login"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/regist"
+            android:id="@+id/button_of_regist"
+            android:layout_alignParentStart="true" />
+    </LinearLayout>
 
 
 

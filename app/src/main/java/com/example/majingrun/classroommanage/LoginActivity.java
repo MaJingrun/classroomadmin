@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -31,10 +32,11 @@ public class LoginActivity extends AppCompatActivity{
     EditText editText_p;
     Button button;
     RadioGroup radio;
-    User user;
+    static User user;
     int type=0;
     Gson gson=new Gson();
     String s="null";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,17 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+
+        Button button_regist=(Button)findViewById(R.id.button_of_regist);
+        button_regist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(LoginActivity.this,Regist2Activity.class);
+                startActivity(in);
+            }
+        });
+
+
         radio=(RadioGroup)findViewById(R.id.radioGroup);
         radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -76,7 +89,9 @@ public class LoginActivity extends AppCompatActivity{
     }
     public void TestLogin(User user){
         String json=gson.toJson(user);
-        String url="http://192.168.1.104/web/Login.php";
+        String url="http://"+getResources().getString(R.string.ip)+"/web/Login.php";
+        Log.i("info",json+"         "+url);
+        //String url="http://192.168.1.104/web/Login.php";
         String re="";
         RequestBody requestBody= RequestBody.create(JSON,json);
         Request request=new Request.Builder()
@@ -99,6 +114,13 @@ public class LoginActivity extends AppCompatActivity{
                             ShowLoginInfo();
                         }
                     });
+                }else{
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LoginActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
             }
@@ -106,6 +128,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void ShowLoginInfo(){
+        Log.i("info","222222222222"+s);
         if(s.equals("1")){
             Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
             Intent in=new Intent(LoginActivity.this,StudentActivity.class);

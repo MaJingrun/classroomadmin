@@ -21,4 +21,12 @@
         <item>3楼</item>
         <item>4楼</item>
     </string-array>
+
+    <string-array name="keshu">
+        <item>1节</item>
+        <item>2节</item>
+        <item>3节</item>
+        <item>4节</item>
+        <item>5节</item>
+    </string-array>
 </resources>

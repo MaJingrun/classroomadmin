@@ -14,4 +14,8 @@ public class User {
         this.password=p;
         this.type=t;
     }
+
+    public String getId(){
+        return id;
+    }
 }
