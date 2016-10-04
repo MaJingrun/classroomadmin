@@ -72,6 +72,14 @@ public class StudentActivity extends TabActivity {
         CreateSpinner();
         CheckApply();
 
+        Button bu2=(Button)findViewById(R.id.button_refresh);
+        bu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                refresh();
+            }
+        });
         Button bu=(Button)findViewById(R.id.button_calcel);
         bu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -473,5 +481,8 @@ public class StudentActivity extends TabActivity {
 
             }
         });
+    }
+    public void refresh(){
+        onCreate(null);
     }
 }

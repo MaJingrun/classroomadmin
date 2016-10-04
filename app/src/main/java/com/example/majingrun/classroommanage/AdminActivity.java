@@ -41,6 +41,7 @@ public class AdminActivity extends TabActivity {
     Map<String,String> map;
     Map<String,String> map2;
     ListView lv;
+    ListView lv2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,27 @@ public class AdminActivity extends TabActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Pass(lv.getItemAtPosition(position).toString());
+                        NotPass(lv.getItemAtPosition(position).toString());
+                    }
+                });
+                AlertDialog ad=ab.create();
+                ad.show();
+            }
+        });
+
+        ListView listView2=(ListView)findViewById(R.id.listView2);
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                lv2=(ListView)parent;
+                Log.i("info",""+lv2.getItemAtPosition(position).toString());
+                AlertDialog.Builder ab=new AlertDialog.Builder(AdminActivity.this);
+                ab.setTitle("终止");
+                ab.setMessage("是否终止使用?");
+                ab.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StopApply(lv2.getItemAtPosition(position).toString());
                     }
                 });
                 AlertDialog ad=ab.create();
@@ -216,5 +237,33 @@ public class AdminActivity extends TabActivity {
             }
         });
 
+    }
+    public void StopApply(String in){
+        String url="http://"+getResources().getString(R.string.ip)+"/web/StopApply.php";
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("info",in);
+        String json=new Gson().toJson(map);
+        RequestBody requestBody=RequestBody.create(LoginActivity.JSON,json);
+        Request request=new Request.Builder().url(url).post(requestBody).build();
+        ok.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            refresh();
+                        }
+                    });
+                }
+
+            }
+        });
     }
 }

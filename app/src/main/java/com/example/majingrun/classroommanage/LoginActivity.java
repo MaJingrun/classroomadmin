@@ -101,7 +101,13 @@ public class LoginActivity extends AppCompatActivity{
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(LoginActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -141,10 +147,8 @@ public class LoginActivity extends AppCompatActivity{
             finish();
         }else if(s.equals("0")){
             Toast.makeText(LoginActivity.this,"账号密码不正确",Toast.LENGTH_SHORT).show();
-            s="null";
         }else{
             Toast.makeText(LoginActivity.this,"网络连接错误",Toast.LENGTH_SHORT).show();
-            s="null";
         }
     }
 }
